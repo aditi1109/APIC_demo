@@ -1,0 +1,62 @@
+swagger: '2.0'
+info:
+  title: APICTest_API
+  x-ibm-name: apictest-api
+  version: 1.0.0
+host: $(catalog.host)
+schemes:
+  - https
+basePath: /myapi
+produces:
+  - application/json
+consumes:
+  - application/json
+security: []
+securityDefinitions: {}
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+      - invoke:
+          title: invoke
+          version: 2.0.0
+          verb: keep
+          target-url: $(target-url)$(request.path)
+          follow-redirects: false
+          timeout: 60
+          parameter-control:
+            type: blacklist
+          header-control:
+            type: blacklist
+            values:
+              - ^X-IBM-Client-Id$
+          inject-proxy-headers: true
+  phase: realized
+  gateway: datapower-api-gateway
+  type: rest
+  activity-log:
+    enabled: true
+    error-content: header
+    success-content: activity
+  application-authentication:
+    certificate: false
+  properties:
+    target-url:
+      value: 'https://$(catalog.host)'
+      description: The URL of the target service
+      encoded: false
+tags: []
+definitions: {}
+paths:
+  /getStatus:
+    post:
+      responses:
+        '200':
+          description: 200 OK
+      consumes:
+        - application/json
+      produces:
+        - application/json
