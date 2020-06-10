@@ -14,6 +14,8 @@ plans:
     approval: false
 apis:
   apictest-api1.0.0:
+    $ref: apictest-api_1.0.0.yaml
+  apictest-api2.0.0:
     $ref: apictest-api_2.0.0.yaml
 visibility:
   view:
@@ -24,4 +26,4 @@ visibility:
     type: authenticated
     orgs: []
     enabled: true
-product: 2.0.0
+product: 1.0.0

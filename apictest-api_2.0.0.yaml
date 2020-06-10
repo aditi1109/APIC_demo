@@ -21,20 +21,19 @@ x-ibm-configuration:
   assembly:
     execute:
       - invoke:
-          version: 2.0.0
           title: invoke
+          version: 2.0.0
+          verb: keep
+          target-url: $(target-url)$(request.path)
+          follow-redirects: false
+          timeout: 60
+          parameter-control:
+            type: blacklist
           header-control:
             type: blacklist
-            values: []
-          parameter-control:
-            type: whitelist
-            values: []
-          timeout: 60
-          verb: keep
-          cache-response: protocol
-          cache-ttl: 900
-          stop-on-error: []
-          target-url: 'http://dummy.restapiexample.com/api/v1/employees'
+            values:
+              - ^X-IBM-Client-Id$
+          inject-proxy-headers: true
   phase: realized
   gateway: datapower-api-gateway
   type: rest
